@@ -1,0 +1,323 @@
+/**
+ * Battlefield System - Sheet Styles
+ */
+
+/* Global Styles */
+.battlefield-system .sheet {
+  font-family: 'Arial', sans-serif;
+  color: #191813;
+}
+
+.battlefield-system .sheet-header {
+  padding: 10px;
+  background: #222;
+  color: #f0f0f0;
+  border-bottom: 2px solid #444;
+}
+
+.battlefield-system .header-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.battlefield-system .charname input {
+  width: 100%;
+  height: 36px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  background: #333;
+  color: #f0f0f0;
+  border: 1px solid #555;
+  border-radius: 4px;
+}
+
+.battlefield-system .charlevel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.battlefield-system .charlevel input {
+  background: #333;
+  color: #f0f0f0;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+/* Tabs */
+.battlefield-system .tabs {
+  display: flex;
+  background: #333;
+  border-bottom: 2px solid #444;
+}
+
+.battlefield-system .tabs .item {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  color: #ccc;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-right: 1px solid #444;
+}
+
+.battlefield-system .tabs .item:last-child {
+  border-right: none;
+}
+
+.battlefield-system .tabs .item:hover {
+  background: #444;
+  color: #fff;
+}
+
+.battlefield-system .tabs .item.active {
+  background: #444;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Sheet Body */
+.battlefield-system .sheet-body {
+  padding: 10px;
+  background: #f0f0f0;
+  min-height: 400px;
+}
+
+.battlefield-system .tab {
+  display: none;
+}
+
+.battlefield-system .tab.active {
+  display: block;
+}
+
+/* Form Groups */
+.battlefield-system .form-group {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.battlefield-system .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.battlefield-system .form-group input[type="text"],
+.battlefield-system .form-group input[type="number"],
+.battlefield-system .form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.battlefield-system .form-group textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* Grid Layout */
+.battlefield-system .grid {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.battlefield-system .grid-2col {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Checkbox Group */
+.battlefield-system .checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.battlefield-system .checkbox-group input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+/* Editor Content */
+.battlefield-system .editor-content {
+  min-height: 100px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  resize: vertical;
+}
+
+/* Heroes List */
+.battlefield-system .heroes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.battlefield-system .hero-card {
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.battlefield-system .hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.battlefield-system .hero-header h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.battlefield-system .remove-hero {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.battlefield-system .remove-hero:hover {
+  background: #c82333;
+}
+
+.battlefield-system .add-hero {
+  width: 100%;
+  padding: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.battlefield-system .add-hero:hover {
+  background: #218838;
+}
+
+/* Status Effects */
+.battlefield-system .status-effects {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.battlefield-system .active-statuses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.battlefield-system .status-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background: #e9ecef;
+  border: 1px solid #dee2e6;
+  border-radius: 20px;
+}
+
+.battlefield-system .status-item img {
+  width: 20px;
+  height: 20px;
+}
+
+.battlefield-system .status-item span {
+  font-size: 12px;
+}
+
+.battlefield-system .remove-status {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.battlefield-system .remove-status:hover {
+  background: #c82333;
+}
+
+.battlefield-system .available-statuses {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.battlefield-system .add-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.battlefield-system .add-status:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.battlefield-system .add-status img {
+  width: 32px;
+  height: 32px;
+}
+
+.battlefield-system .add-status span {
+  font-size: 12px;
+  color: #333;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .battlefield-system .grid-2col {
+    grid-template-columns: 1fr;
+  }
+  
+  .battlefield-system .available-statuses {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+}

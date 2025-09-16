@@ -1,0 +1,38 @@
+{{!-- Handlebars Helpers for Battlefield System --}}
+
+{{!-- Equality Check Helper --}}
+{{!-- Usage: {{#if (eq value1 value2)}}...{{/if}} --}}
+{{#*inline "eq"}}
+{{#compare a b "==="}}{{else}}{{/compare}}
+{{/inline}}
+
+{{!-- Comparison Helper --}}
+{{#*inline "compare"}}
+{{#if (lookup this 0)}}
+{{#math a b operator}}{{/math}}
+{{else}}
+{{#if (math a b operator)}}
+{{yield}}
+{{/if}}
+{{/if}}
+{{/inline}}
+
+{{!-- Math Helper --}}
+{{#*inline "math"}}
+{{#if (eq operator "+")}}{{sum a b}}{{else if (eq operator "-")}}{{sub a b}}{{else if (eq operator "*")}}{{mult a b}}{{else if (eq operator "/")}}{{div a b}}{{else if (eq operator "%")}}{{mod a b}}{{else if (eq operator "==")}}{{equals a b}}{{else if (eq operator "===")}}{{strictEquals a b}}{{else if (eq operator "!=")}}{{notEquals a b}}{{else if (eq operator "!==")}}{{strictNotEquals a b}}{{else if (eq operator "<")}}{{lessThan a b}}{{else if (eq operator "<=")}}{{lessThanOrEqual a b}}{{else if (eq operator ">")}}{{greaterThan a b}}{{else if (eq operator ">=")}}{{greaterThanOrEqual a b}}{{/if}}
+{{/inline}}
+
+{{!-- Helper Functions --}}
+{{#*inline "sum"}}{{add a b}}{{/inline}}
+{{#*inline "sub"}}{{subtract a b}}{{/inline}}
+{{#*inline "mult"}}{{multiply a b}}{{/inline}}
+{{#*inline "div"}}{{divide a b}}{{/inline}}
+{{#*inline "mod"}}{{modulo a b}}{{/inline}}
+{{#*inline "equals"}}{{equals a b}}{{/inline}}
+{{#*inline "strictEquals"}}{{strictEquals a b}}{{/inline}}
+{{#*inline "notEquals"}}{{notEquals a b}}{{/inline}}
+{{#*inline "strictNotEquals"}}{{strictNotEquals a b}}{{/inline}}
+{{#*inline "lessThan"}}{{lessThan a b}}{{/inline}}
+{{#*inline "lessThanOrEqual"}}{{lessThanOrEqual a b}}{{/inline}}
+{{#*inline "greaterThan"}}{{greaterThan a b}}{{/inline}}
+{{#*inline "greaterThanOrEqual"}}{{greaterThanOrEqual a b}}{{/inline}}

@@ -1,0 +1,73 @@
+{
+  "battlefield-system": {
+    "Actor": {
+      "Types": {
+        "army": "军队",
+        "structure": "建筑/据点"
+      }
+    },
+    "Sheet": {
+      "Army": {
+        "Name": "军队名称",
+        "Faction": "阵营",
+        "Size": "规模",
+        "Description": "描述",
+        "EliteRegiment": "精锐军团",
+        "Heroes": "英雄",
+        "HeroName": "英雄名称",
+        "Equipment": "装备",
+        "GrowthTraits": "成长特性",
+        "StatusEffects": "状态效果"
+      },
+      "Structure": {
+        "Name": "建筑名称",
+        "StructureType": "建筑类型",
+        "BuildingType": "建筑种类",
+        "Description": "描述",
+        "OwnerFaction": "所属阵营",
+        "DefenseValue": "防御值",
+        "IsCapturable": "可占领",
+        "SpecialEffects": "特殊效果",
+        "ResourceProduction": "资源产出",
+        "StatusEffects": "状态效果"
+      }
+    },
+    "StatusEffects": {
+      "Strength": "力量增强",
+      "Weakness": "虚弱",
+      "Speed": "速度提升",
+      "Slow": "减速",
+      "Defense": "防御增强",
+      "Vulnerable": "易伤",
+      "Attack": "攻击增强",
+      "Stun": "眩晕",
+      "Unknown": "未知"
+    },
+    "Settings": {
+      "LoggingLevel": {
+        "Name": "日志级别",
+        "Hint": "设置系统的日志记录级别",
+        "Choices": {
+          "NONE": "无",
+          "ERROR": "错误",
+          "WARN": "警告",
+          "INFO": "信息",
+          "LOG": "日志",
+          "DEBUG": "调试"
+        }
+      }
+    },
+    "Buttons": {
+      "AddHero": "添加英雄",
+      "RemoveHero": "移除",
+      "AddStatusEffect": "添加",
+      "RemoveStatusEffect": "移除"
+    },
+    "Tabs": {
+      "Main": "主要",
+      "Heroes": "英雄",
+      "Status": "状态",
+      "Details": "详情"
+    }
+  }
+}

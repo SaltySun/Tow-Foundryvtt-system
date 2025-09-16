@@ -1,0 +1,107 @@
+{{!-- Army Sheet Template --}}
+<form class="army-sheet-form">
+  <header class="sheet-header">
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'battlefield-system.Sheet.Army.Name'}}" />
+      </h1>
+      <div class="charlevel">
+        <label>{{localize 'battlefield-system.Sheet.Army.Side'}}:</label>
+        <input name="system.faction" type="text" value="{{system.faction}}" placeholder="{{localize 'battlefield-system.Sheet.Army.Side'}}" />
+      </div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="main">{{localize 'battlefield-system.Tabs.Main'}}</a>
+    <a class="item" data-tab="heroes">{{localize 'battlefield-system.Sheet.Army.Heros'}}</a>
+    <a class="item" data-tab="status">{{localize 'battlefield-system.Sheet.Army.StatusEffects'}}</a>
+  </nav>
+
+  <section class="sheet-body">
+    {{!-- Main Tab --}}
+    <div class="tab" data-tab="main">
+      <div class="form-group">
+        <label>{{localize 'battlefield-system.Sheet.Army.Description'}}:</label>
+        <div id="description-editor" class="editor-content" data-field="description">{{{system.description}}}</div>
+      </div>
+      
+      <div class="grid grid-2col">
+        <div class="form-group">
+          <label>{{localize 'battlefield-system.Sheet.Army.Size'}}:</label>
+          <input name="system.size" type="number" value="{{system.size}}" min="0" />
+        </div>
+        <div class="form-group">
+          <label>实力评级:</label>
+          <input name="system.powerRating" type="number" value="{{system.powerRating}}" min="0" max="100" />
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>荣誉军团:</label>
+        <div id="honored-legions-editor" class="editor-content" data-field="honoredLegions">{{{system.honoredLegions}}}</div>
+      </div>
+      
+      <div class="form-group">
+        <label>特殊能力:</label>
+        <div id="special-abilities-editor" class="editor-content" data-field="specialAbilities">{{{system.specialAbilities}}}</div>
+      </div>
+    </div>
+
+    {{!-- Heroes Tab --}}
+    <div class="tab" data-tab="heroes">
+      <div class="heroes-list">
+        {{#each system.heroes as |hero index|}}
+        <div class="hero-card">
+          <div class="hero-header">
+            <h3>英雄 #{{add index 1}}</h3>
+            <button type="button" class="remove-hero" data-index="{{index}}"><i class="fas fa-trash"></i></button>
+          </div>
+          <div class="form-group">
+            <label>姓名:</label>
+            <input name="hero-name-{{index}}" type="text" value="{{hero.name}}" placeholder="英雄姓名" />
+          </div>
+          <div class="form-group">
+            <label>装备:</label>
+            <textarea name="hero-equipment-{{index}}" rows="2" placeholder="装备">{{hero.equipment}}</textarea>
+          </div>
+          <div class="form-group">
+            <label>成长特性:</label>
+            <textarea name="hero-traits-{{index}}" rows="3" placeholder="成长特性">{{hero.traits}}</textarea>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      <button type="button" class="add-hero"><i class="fas fa-plus"></i> {{localize 'battlefield-system.Buttons.Add'}} {{localize 'battlefield-system.Sheet.Army.Heros'}}</button>
+    </div>
+
+    {{!-- Status Tab --}}
+    <div class="tab" data-tab="status">
+      <div class="status-effects">
+        <h3>{{localize 'battlefield-system.Sheet.Army.StatusEffects'}}</h3>
+        <div class="active-statuses">
+          {{#each statusEffects as |status|}}
+          <div class="status-item">
+            <img src="{{status.icon}}" alt="{{status.label}}" title="{{status.label}}" />
+            <span>{{status.label}}</span>
+            <button type="button" class="remove-status" data-status-id="{{status.id}}"><i class="fas fa-times"></i></button>
+          </div>
+          {{/each}}
+          {{#unless statusEffects.length}}
+          <p>暂无状态效果。</p>
+          {{/unless}}
+        </div>
+        
+        <h3>可用状态效果</h3>
+        <div class="available-statuses">
+          {{#each configStatusEffects as |status|}}
+          <button type="button" class="add-status" data-status-id="{{status.id}}" title="{{status.label}}">
+            <img src="{{status.icon}}" alt="{{status.label}}" />
+            <span>{{status.label}}</span>
+          </button>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

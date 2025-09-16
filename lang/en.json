@@ -1,0 +1,72 @@
+{
+  "battlefield-system": {
+    "Actor": {
+      "Types": {
+        "army": "Army",
+        "structure": "Structure"
+      }
+    },
+    "Sheet": {
+      "Army": {
+        "Name": "Army Name",
+        "Faction": "Faction",
+        "Size": "Size",
+        "Description": "Description",
+        "EliteRegiment": "Elite Regiment",
+        "Heroes": "Heroes",
+        "HeroName": "Hero Name",
+        "Equipment": "Equipment",
+        "GrowthTraits": "Growth Traits",
+        "StatusEffects": "Status Effects"
+      },
+      "Structure": {
+        "Name": "Structure Name",
+        "StructureType": "Structure Type",
+        "BuildingType": "Building Type",
+        "Description": "Description",
+        "OwnerFaction": "Owner Faction",
+        "DefenseValue": "Defense Value",
+        "IsCapturable": "Is Capturable",
+        "SpecialEffects": "Special Effects",
+        "ResourceProduction": "Resource Production",
+        "StatusEffects": "Status Effects"
+      }
+    },
+    "StatusEffects": {
+      "Strength": "Strength",
+      "Weakness": "Weakness",
+      "Speed": "Speed",
+      "Slow": "Slow",
+      "Defense": "Defense",
+      "Vulnerable": "Vulnerable",
+      "Attack": "Attack",
+      "Stun": "Stun"
+    },
+    "Settings": {
+      "LoggingLevel": {
+        "Name": "Logging Level",
+        "Hint": "Set the level of logging for the system",
+        "Choices": {
+          "NONE": "None",
+          "ERROR": "Error",
+          "WARN": "Warning",
+          "INFO": "Info",
+          "LOG": "Log",
+          "DEBUG": "Debug"
+        }
+      }
+    },
+    "Buttons": {
+      "AddHero": "Add Hero",
+      "RemoveHero": "Remove",
+      "AddStatusEffect": "Add",
+      "RemoveStatusEffect": "Remove"
+    },
+    "Tabs": {
+      "Main": "Main",
+      "Heroes": "Heroes",
+      "Status": "Status",
+      "Details": "Details"
+    }
+  }
+}

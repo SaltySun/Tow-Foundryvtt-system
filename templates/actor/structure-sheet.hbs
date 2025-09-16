@@ -1,0 +1,99 @@
+{{!-- Structure/Plot Sheet Template --}}
+<form class="structure-sheet-form">
+  <header class="sheet-header">
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'battlefield-system.Sheet.Structure.Name'}}" />
+      </h1>
+      <div class="structure-type">
+        <label>{{localize 'battlefield-system.Sheet.Structure.Type'}}:</label>
+        <span>{{fullType}}</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="main">{{localize 'battlefield-system.Tabs.Main'}}</a>
+    <a class="item" data-tab="details">{{localize 'battlefield-system.Sheet.Structure.Description'}}</a>
+    <a class="item" data-tab="status">{{localize 'battlefield-system.Sheet.Structure.StatusEffects'}}</a>
+  </nav>
+
+  <section class="sheet-body">
+    {{!-- Main Tab --}}
+    <div class="tab" data-tab="main">
+      <div class="grid grid-2col">
+        <div class="form-group">
+          <label>{{localize 'battlefield-system.Sheet.Structure.Type'}}:</label>
+          <input name="system.structureType" type="text" value="{{system.structureType}}" placeholder="例如，堡垒，村庄，森林" />
+        </div>
+        <div class="form-group">
+          <label>建筑类型:</label>
+          <input name="system.buildingType" type="text" value="{{system.buildingType}}" placeholder="例如，城堡，寺庙，瞭望塔" />
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>{{localize 'battlefield-system.Sheet.Structure.Description'}}:</label>
+        <div id="description-editor" class="editor-content" data-field="description">{{{system.description}}}</div>
+      </div>
+      
+      <div class="grid grid-2col">
+        <div class="form-group">
+          <label>{{localize 'battlefield-system.Sheet.Structure.Side'}}:</label>
+          <input name="system.ownerFaction" type="text" value="{{system.ownerFaction}}" placeholder="阵营名称" />
+        </div>
+        <div class="form-group">
+          <label>{{localize 'battlefield-system.Sheet.Structure.Defense'}}:</label>
+          <input name="system.defenseValue" type="number" value="{{system.defenseValue}}" min="0" />
+        </div>
+      </div>
+      
+      <div class="form-group checkbox-group">
+        <input id="capturable-checkbox" name="system.isCapturable" type="checkbox" class="capturable-checkbox" {{checked system.isCapturable}} />
+        <label for="capturable-checkbox">{{localize 'battlefield-system.Sheet.Structure.IsCapturable'}}</label>
+      </div>
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab" data-tab="details">
+      <div class="form-group">
+        <label>特殊效果:</label>
+        <div id="special-effects-editor" class="editor-content" data-field="specialEffects">{{{system.specialEffects}}}</div>
+      </div>
+      
+      <div class="form-group">
+        <label>资源产出:</label>
+        <textarea name="system.resourceProduction" rows="3" placeholder="例如，每天产出10单位食物">{{system.resourceProduction}}</textarea>
+      </div>
+    </div>
+
+    {{!-- Status Tab --}}
+    <div class="tab" data-tab="status">
+      <div class="status-effects">
+        <h3>{{localize 'battlefield-system.Sheet.Structure.StatusEffects'}}</h3>
+        <div class="active-statuses">
+          {{#each statusEffects as |status|}}
+          <div class="status-item">
+            <img src="{{status.icon}}" alt="{{status.label}}" title="{{status.label}}" />
+            <span>{{status.label}}</span>
+            <button type="button" class="remove-status" data-status-id="{{status.id}}"><i class="fas fa-times"></i></button>
+          </div>
+          {{/each}}
+          {{#unless statusEffects.length}}
+          <p>暂无状态效果。</p>
+          {{/unless}}
+        </div>
+        
+        <h3>可用状态效果</h3>
+        <div class="available-statuses">
+          {{#each configStatusEffects as |status|}}
+          <button type="button" class="add-status" data-status-id="{{status.id}}" title="{{status.label}}">
+            <img src="{{status.icon}}" alt="{{status.label}}" />
+            <span>{{status.label}}</span>
+          </button>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

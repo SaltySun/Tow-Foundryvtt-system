@@ -1,0 +1,65 @@
+{"id": "battlefield-system",
+  "title": "Battlefield System",
+  "description": "A system for managing armies, heroes, and battlefield locations in Foundry VTT",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13.315",
+    "maximum": "13"
+  },
+  "authors": [
+    {
+      "name": "Your Name",
+      "email": "your.email@example.com"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "zh",
+      "name": "中文",
+      "path": "lang/zh.json"
+    }
+  ],
+  "esmodules": [
+    "module/battlefield-system.js"
+  ],
+  "scripts": [],
+  "styles": [
+    "css/sheet.css"
+  ],
+  "documentTypes": {
+    "Actor": {
+      "army": {},
+      "structure": {}
+    }
+  },
+  "grid": {
+    "distance": 5,
+    "units": "ft",
+    "type": 1,
+    "diagonals": 0
+  },
+  "settings": [
+    {
+      "key": "loggingLevel",
+      "name": "battlefield-system.Settings.LoggingLevel.Name",
+      "hint": "battlefield-system.Settings.LoggingLevel.Hint",
+      "scope": "client",
+      "type": "Select",
+      "choices": {
+        "NONE": "battlefield-system.Settings.LoggingLevel.Choices.NONE",
+        "ERROR": "battlefield-system.Settings.LoggingLevel.Choices.ERROR",
+        "WARN": "battlefield-system.Settings.LoggingLevel.Choices.WARN",
+        "INFO": "battlefield-system.Settings.LoggingLevel.Choices.INFO",
+        "LOG": "battlefield-system.Settings.LoggingLevel.Choices.LOG",
+        "DEBUG": "battlefield-system.Settings.LoggingLevel.Choices.DEBUG"
+      },
+      "default": "LOG"
+    }
+  ],
+  "version": "1.0.0"
+}
