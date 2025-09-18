@@ -95,38 +95,7 @@
   display: block;
 }
 
-/* Form Groups */
-.battlefield-system .form-group {
-  margin-bottom: 15px;
-  padding: 10px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.battlefield-system .form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
-}
-
-.battlefield-system .form-group input[type="text"],
-.battlefield-system .form-group input[type="number"],
-.battlefield-system .form-group textarea {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: #fff;
-  color: #333;
-  box-sizing: border-box;
-}
-
-.battlefield-system .form-group textarea {
-  resize: vertical;
-  min-height: 60px;
-}
+/* Form Groups - Cleared as requested */
 
 /* Grid Layout */
 .battlefield-system .grid {
@@ -151,16 +120,7 @@
   margin: 0;
 }
 
-/* Editor Content */
-.battlefield-system .editor-content {
-  min-height: 100px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: #fff;
-  color: #333;
-  resize: vertical;
-}
+/* Editor Styles - Cleared as requested */
 
 /* Heroes List */
 .battlefield-system .heroes-list {
@@ -546,3 +506,5 @@
     width: 100%;
   }
 }
+
+/* ProseMirror Editor Menu - Cleared as requested */

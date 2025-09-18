@@ -23,10 +23,10 @@
     <div class="tab" data-tab="main">
       <div class="form-group">
         <label>{{localize 'battlefield-system.Sheet.Army.Description'}}:</label>
-        <div id="description-editor" class="editor-content" data-field="description">{{{system.description}}}</div>
+        <textarea name="system.description" rows="4">{{system.description}}</textarea>
       </div>
       
-      <div class="grid grid-2col">
+      {{!-- <div class="grid grid-2col">
         <div class="form-group">
           <label>{{localize 'battlefield-system.Sheet.Army.Size'}}:</label>
           <input name="system.size" type="number" value="{{system.size}}" min="0" />
@@ -35,16 +35,16 @@
           <label>实力评级:</label>
           <input name="system.powerRating" type="number" value="{{system.powerRating}}" min="0" max="100" />
         </div>
-      </div>
+      </div> --}}
       
       <div class="form-group">
         <label>荣誉军团:</label>
-        <div id="honored-legions-editor" class="editor-content" data-field="honoredLegions">{{{system.honoredLegions}}}</div>
+        <textarea name="system.honoredLegions" rows="4">{{system.honoredLegions}}</textarea>
       </div>
       
       <div class="form-group">
         <label>特殊能力:</label>
-        <div id="special-abilities-editor" class="editor-content" data-field="specialAbilities">{{{system.specialAbilities}}}</div>
+        <textarea name="system.specialAbilities" rows="4">{{system.specialAbilities}}</textarea>
       </div>
     </div>
 

@@ -34,9 +34,13 @@ export class ArmySheet extends ActorSheet {
         // Format status Items for display
         data.statusEffects = this.actor.getStatusItems().map(item => ({
             id: item.id,
+            name: item.name,
             label: item.name,
             icon: item.img || 'icons/svg/hazard.svg',
-            isActive: true
+            isActive: true,
+            system: {
+                description: item.system?.description || ''
+            }
         }));
         
         return data;
@@ -46,7 +50,7 @@ export class ArmySheet extends ActorSheet {
      * Activate event listeners using the prepared sheet HTML
      * @param {HTMLElement} html - The prepared HTML object ready to be rendered into the DOM
      */
-    activateListeners(html) {
+    async activateListeners(html) {
         super.activateListeners(html);
         
         // Add hero button
@@ -65,10 +69,7 @@ export class ArmySheet extends ActorSheet {
         html.find('.status-name').change(this._onStatusNameChange.bind(this));
         html.find('.status-description-input').change(this._onStatusDescriptionChange.bind(this));
         
-        // Make editable fields work with TinyMCE for rich text editing
-        if (this.isEditable) {
-            this._activateEditor(html);
-        }
+
     }
 
     /**
@@ -286,46 +287,5 @@ export class ArmySheet extends ActorSheet {
         }
     }
 
-    /**
-     * Activate TinyMCE editors for rich text fields
-     * @param {HTMLElement} html - The sheet HTML
-     * @private
-     */
-    _activateEditor(html) {
-        // Find all elements with the 'editor-content' class and activate TinyMCE
-        html.find('.editor-content').each((i, element) => {
-            const editorId = element.id;
-            const content = element.innerHTML;
-            const fieldName = element.dataset.field;
-            
-            if (editorId && fieldName) {
-                // Use TextEditor.create API to create the editor
-                TextEditor.create(element, {
-                    value: content,
-                    onChange: (html) => this._onEditorSubmit(fieldName, html),
-                    editable: this.isEditable
-                });
-            }
-        });
-    }
 
-    /**
-     * Handle TinyMCE editor content submission
-     * @param {string} fieldName - The name of the field being edited
-     * @param {string} html - The HTML content from the editor
-     * @private
-     */
-    async _onEditorSubmit(fieldName, html) {
-        try {
-            // Update the actor with the new editor content
-            await this.actor.update({
-                [`system.${fieldName}`]: html
-            });
-            
-            logger.debug(`Updated editor field ${fieldName} for army ${this.actor.name}`);
-        } catch (err) {
-            logger.error(`Failed to update editor field ${fieldName} for army ${this.actor.name}:`, err);
-            ui.notifications.error(`Failed to save editor content: ${err.message}`);
-        }
-    }
 }
