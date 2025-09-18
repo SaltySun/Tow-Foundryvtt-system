@@ -35,6 +35,9 @@
     "Actor": {
       "army": {},
       "structure": {}
+    },
+    "Item": {
+      "status": {}
     }
   },
   "grid": {

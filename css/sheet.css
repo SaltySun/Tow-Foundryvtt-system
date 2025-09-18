@@ -229,6 +229,40 @@
   gap: 15px;
 }
 
+/* Custom Status Effect Input */
+.battlefield-system .add-custom-status {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.battlefield-system #custom-status-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+}
+
+.battlefield-system .add-custom-status-btn {
+  padding: 8px 16px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.battlefield-system .add-custom-status-btn:hover {
+  background: #218838;
+}
+
 .battlefield-system .active-statuses {
   display: flex;
   flex-wrap: wrap;
@@ -311,6 +345,183 @@
   color: #333;
 }
 
+/* Custom Status Effect Input Styles */
+.battlefield-system .add-custom-status {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.battlefield-system #custom-status-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.battlefield-system #custom-status-input:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.battlefield-system .add-custom-status-btn {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.battlefield-system .add-custom-status-btn:hover {
+  background-color: #218838;
+}
+
+/* Status Effects Redesign */
+.battlefield-system .status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.battlefield-system .add-status-btn {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.battlefield-system .add-status-btn:hover {
+  background-color: #218838;
+}
+
+.battlefield-system .status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.battlefield-system .status-item {
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.battlefield-system .status-item:hover {
+  border-color: #adb5bd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.battlefield-system .status-item .status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.battlefield-system .status-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.battlefield-system .status-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+}
+
+.battlefield-system .status-name {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #fff;
+  color: #333;
+}
+
+.battlefield-system .status-name:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.battlefield-system .status-item .remove-status {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.battlefield-system .status-item .remove-status:hover {
+  background: #c82333;
+}
+
+.battlefield-system .status-description {
+  margin-top: 10px;
+}
+
+.battlefield-system .status-description-input {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  background: #fff;
+  color: #333;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.battlefield-system .status-description-input:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.battlefield-system .no-status {
+  padding: 20px;
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  border-radius: 4px;
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .battlefield-system .grid-2col {
@@ -319,5 +530,19 @@
   
   .battlefield-system .available-statuses {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+  
+  .battlefield-system .status-item .status-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  
+  .battlefield-system .status-info {
+    width: 100%;
+  }
+  
+  .battlefield-system .status-item .remove-status {
+    width: 100%;
   }
 }

@@ -6,7 +6,7 @@
 import BattlefieldActor from './documents/BattlefieldActor.js';
 import { ArmySheet } from './sheets/ArmySheet.js';
 import { StructureSheet } from './sheets/StructureSheet.js';
-import { ArmyDataModel, StructureDataModel } from './documents/dataModels.js';
+import { ArmyDataModel, StructureDataModel, StatusDataModel } from './documents/dataModels.js';
 import logger from './utils/Logger.js';
 
 /* -------------------------------------------- */
@@ -18,6 +18,9 @@ Hooks.once('init', async function() {
         CONFIG.Actor.documentClass = BattlefieldActor;
         CONFIG.Actor.dataModels.army = ArmyDataModel;
         CONFIG.Actor.dataModels.structure = StructureDataModel;
+        
+        // Define custom Item data models
+        CONFIG.Item.dataModels.status = StatusDataModel;
 
         // Register system settings
         game.settings.register(game.system.id, 'loggingLevel', {

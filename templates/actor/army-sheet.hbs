@@ -6,15 +6,15 @@
         <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'battlefield-system.Sheet.Army.Name'}}" />
       </h1>
       <div class="charlevel">
-        <label>{{localize 'battlefield-system.Sheet.Army.Side'}}:</label>
-        <input name="system.faction" type="text" value="{{system.faction}}" placeholder="{{localize 'battlefield-system.Sheet.Army.Side'}}" />
+        <label>{{localize 'battlefield-system.Sheet.Army.Faction'}}:</label>
+        <input name="system.faction" type="text" value="{{system.faction}}" placeholder="{{localize 'battlefield-system.Sheet.Army.Faction'}}" />
       </div>
     </div>
   </header>
 
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="main">{{localize 'battlefield-system.Tabs.Main'}}</a>
-    <a class="item" data-tab="heroes">{{localize 'battlefield-system.Sheet.Army.Heros'}}</a>
+    <a class="item" data-tab="heroes">{{localize 'battlefield-system.Sheet.Army.Heroes'}}</a>
     <a class="item" data-tab="status">{{localize 'battlefield-system.Sheet.Army.StatusEffects'}}</a>
   </nav>
 
@@ -72,34 +72,42 @@
         </div>
         {{/each}}
       </div>
-      <button type="button" class="add-hero"><i class="fas fa-plus"></i> {{localize 'battlefield-system.Buttons.Add'}} {{localize 'battlefield-system.Sheet.Army.Heros'}}</button>
+      <button type="button" class="add-hero"><i class="fas fa-plus"></i> {{localize 'battlefield-system.Buttons.Add'}} {{localize 'battlefield-system.Sheet.Army.Heroes'}}</button>
     </div>
 
     {{!-- Status Tab --}}
     <div class="tab" data-tab="status">
       <div class="status-effects">
-        <h3>{{localize 'battlefield-system.Sheet.Army.StatusEffects'}}</h3>
-        <div class="active-statuses">
+        <div class="status-header">
+          <h3>{{localize 'battlefield-system.Sheet.Army.StatusEffects'}}</h3>
+          <button type="button" class="add-status-btn" data-action="create-status">
+            <i class="fas fa-plus"></i> 添加状态
+          </button>
+        </div>
+        
+        {{!-- 状态列表 --}}
+        <div class="status-list">
           {{#each statusEffects as |status|}}
           <div class="status-item">
-            <img src="{{status.icon}}" alt="{{status.label}}" title="{{status.label}}" />
-            <span>{{status.label}}</span>
-            <button type="button" class="remove-status" data-status-id="{{status.id}}"><i class="fas fa-times"></i></button>
+            <div class="status-header">
+              <div class="status-info">
+                <img src="{{status.icon}}" alt="{{status.name}}" title="{{status.name}}" class="status-icon" />
+                <input type="text" class="status-name" value="{{status.name}}" data-status-id="{{status.id}}" placeholder="状态名称" />
+              </div>
+              <button type="button" class="remove-status" data-status-id="{{status.id}}">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="status-description">
+              <textarea class="status-description-input" data-status-id="{{status.id}}" placeholder="输入状态描述...">{{status.system.description}}</textarea>
+            </div>
           </div>
           {{/each}}
           {{#unless statusEffects.length}}
-          <p>暂无状态效果。</p>
+          <div class="no-status">
+            <p>暂无状态。点击上方"添加状态"按钮创建第一个状态。</p>
+          </div>
           {{/unless}}
-        </div>
-        
-        <h3>可用状态效果</h3>
-        <div class="available-statuses">
-          {{#each configStatusEffects as |status|}}
-          <button type="button" class="add-status" data-status-id="{{status.id}}" title="{{status.label}}">
-            <img src="{{status.icon}}" alt="{{status.label}}" />
-            <span>{{status.label}}</span>
-          </button>
-          {{/each}}
         </div>
       </div>
     </div>

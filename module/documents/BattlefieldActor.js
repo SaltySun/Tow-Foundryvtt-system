@@ -41,69 +41,121 @@ export default class BattlefieldActor extends Actor {
     }
 
     /**
-     * Add a status effect (Buff/Debuff) to the actor
-     * @param {string} statusId - The ID of the status effect
-     * @returns {Promise<ActiveEffect>} The created ActiveEffect
+     * Add a status as an Item to the actor
+     * @param {string} statusName - The name of the status
+     * @returns {Promise<Item>} The created Item
      */
-    async addStatusEffect(statusId) {
-        const status = CONFIG.statusEffects.find(e => e.id === statusId);
-        if (!status) {
-            logger.error(`Invalid status ID "${statusId}" provided`);
-            throw new Error(`Invalid status ID "${statusId}" provided`);
+    async addStatus(statusName) {
+        if (!statusName || typeof statusName !== 'string' || statusName.trim() === '') {
+            logger.error('Invalid status name provided');
+            throw new Error('Invalid status name provided');
         }
         
         // Check if the status already exists
-        const existing = this.effects.find(effect => {
-            const statuses = effect.statuses;
-            return statuses.size === 1 && statuses.has(status.id);
-        });
+        const existing = this.items.find(item => item.type === 'status' && item.name === statusName);
         
-        if (existing) return existing;
+        if (existing) {
+            logger.debug(`Status "${statusName}" already exists on actor ${this.name}`);
+            return existing;
+        }
         
-        // Create a new effect
-        const effect = await ActiveEffect.create({
-            label: status.label,
-            icon: status.icon,
-            statuses: new Set([status.id]),
-            origin: this.uuid,
-            duration: {
-                rounds: status.duration?.rounds || null,
-                seconds: status.duration?.seconds || null,
-                turns: status.duration?.turns || null,
-                startRound: game.combat?.round || null,
-                startTime: game.time.worldTime
+        // Create a new status Item
+        const statusItem = await this.createEmbeddedDocuments('Item', [{
+            name: statusName,
+            type: 'status',
+            img: 'icons/svg/hazard.svg',
+            system: {
+                description: '',
+                duration: null,
+                isActive: true,
+                source: this.uuid
+            },
+            flags: {
+                'battlefield-system': {
+                    isStatus: true
+                }
             }
-        }, { parent: this });
+        }]);
         
-        return effect;
+        logger.debug(`Added status "${statusName}" to actor ${this.name}`);
+        return statusItem[0];
     }
 
     /**
-     * Remove a status effect (Buff/Debuff) from the actor
-     * @param {string} statusId - The ID of the status effect to remove
-     * @returns {Promise<Array<ActiveEffect>>} The removed ActiveEffects
+     * Remove a status Item from the actor
+     * @param {string} statusId - The ID of the status Item to remove
+     * @returns {Promise<Array<Item>>} The removed Items
+     */
+    async removeStatus(statusId) {
+        const statusItem = this.items.get(statusId);
+        
+        if (!statusItem || statusItem.type !== 'status') {
+            logger.warn(`No status Item found with ID: ${statusId}`);
+            return [];
+        }
+        
+        await this.deleteEmbeddedDocuments('Item', [statusId]);
+        logger.debug(`Removed status "${statusItem.name}" from actor ${this.name}`);
+        return [statusItem];
+    }
+
+    /**
+     * Get all status Items on the actor
+     * @returns {Array<Item>} Array of status Items
+     */
+    getStatusItems() {
+        return this.items.filter(item => item.type === 'status');
+    }
+
+    /**
+     * @deprecated Use addStatus instead
+     */
+    async addStatusEffect(statusId) {
+        logger.warn('addStatusEffect is deprecated. Use addStatus instead.');
+        // This is kept for backward compatibility but will be removed in future versions
+        try {
+            const status = CONFIG.statusEffects.find(e => e.id === statusId);
+            if (status) {
+                return this.addStatus(status.label);
+            }
+        } catch (err) {
+            logger.error('Error in deprecated addStatusEffect:', err);
+        }
+        return null;
+    }
+
+    /**
+     * @deprecated Use removeStatus instead
      */
     async removeStatusEffect(statusId) {
-        const effects = this.effects.filter(effect => {
-            const statuses = effect.statuses;
-            return statuses.size === 1 && statuses.has(statusId);
-        });
-        
-        if (effects.length === 0) return [];
-        
-        await ActiveEffect.deleteDocuments(effects.map(e => e.id));
-        return effects;
+        logger.warn('removeStatusEffect is deprecated. Use removeStatus instead.');
+        // This is kept for backward compatibility but will be removed in future versions
+        try {
+            const status = this.items.find(item => {
+                return item.type === 'status' && item.name === statusId;
+            });
+            if (status) {
+                return this.removeStatus(status.id);
+            }
+        } catch (err) {
+            logger.error('Error in deprecated removeStatusEffect:', err);
+        }
+        return [];
     }
 
     /**
-     * Get all ActiveEffects that are created on this Actor.
+     * Get all ActiveEffects that are created on this Actor and effects from status Items.
      * @yields {ActiveEffect}
      * @returns {Generator<ActiveEffect, void, void>}
      */
     *allApplicableEffects({ excludeExternal = false } = {}) {
+        // First yield all ActiveEffects for backward compatibility
         for (const effect of this.effects) {
             yield effect;
         }
+        
+        // TODO: In future versions, we should create ActiveEffects based on status Items
+        // For now, we just yield the existing effects
     }
 
     /**

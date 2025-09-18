@@ -252,3 +252,82 @@ export class StructureDataModel extends foundry.abstract.TypeDataModel {
         return this.structureType;
     }
 }
+
+/**
+ * Data Model for Status Items
+ */
+export class StatusDataModel extends foundry.abstract.TypeDataModel {
+    static defineSchema() {
+        return {
+            // 状态描述
+            description: new StringField({
+                required: false,
+                nullable: true,
+                initial: "",
+                label: 'battlefield-system.Status.Description'
+            }),
+            
+            // 持续时间（轮次、回合或秒）
+            duration: new ObjectField({
+                schema: {
+                    rounds: new NumberField({
+                        required: false,
+                        nullable: true,
+                        initial: null,
+                        min: 0
+                    }),
+                    turns: new NumberField({
+                        required: false,
+                        nullable: true,
+                        initial: null,
+                        min: 0
+                    }),
+                    seconds: new NumberField({
+                        required: false,
+                        nullable: true,
+                        initial: null,
+                        min: 0
+                    })
+                },
+                required: false,
+                nullable: true,
+                initial: null
+            }),
+            
+            // 状态是否激活
+            isActive: new BooleanField({
+                required: false,
+                initial: true,
+                label: 'battlefield-system.Status.IsActive'
+            }),
+            
+            // 状态来源
+            source: new StringField({
+                required: false,
+                nullable: true,
+                initial: ""
+            })
+        };
+    }
+    
+    /**
+     * 获取状态的完整显示信息
+     * @returns {Object} 包含状态名称、图标和描述的对象
+     */
+    getDisplayInfo() {
+        return {
+            name: this.parent.name || "Unknown Status",
+            icon: this.parent.img || "icons/svg/hazard.svg",
+            description: this.description || "No description provided",
+            isActive: this.isActive
+        };
+    }
+    
+    /**
+     * 切换状态的激活/禁用状态
+     */
+    toggleActive() {
+        this.isActive = !this.isActive;
+        return this.parent.update({"system.isActive": this.isActive});
+    }
+}

@@ -3,6 +3,7 @@
  */
 
 import logger from '../utils/Logger.js';
+// TextEditor is a global Foundry VTT API - no need to import explicitly
 
 export class ArmySheet extends ActorSheet {
     /**
@@ -30,22 +31,13 @@ export class ArmySheet extends ActorSheet {
         // Add the actor's system data
         data.system = this.actor.system;
         
-        // Format status effects for display
-        data.statusEffects = this.actor.effects.map(effect => {
-            const statuses = effect.statuses;
-            const status = statuses.size > 0 ? Array.from(statuses)[0] : null;
-            const configStatus = CONFIG.statusEffects.find(s => s.id === status);
-            
-            return {
-                id: effect.id,
-                label: configStatus?.label || game.i18n.localize('battlefield-system.StatusEffects.Unknown'),
-                icon: configStatus?.icon || 'icons/svg/hazard.svg',
-                isActive: true
-            };
-        });
-        
-        // Add system configuration for status effects
-        data.configStatusEffects = CONFIG.statusEffects;
+        // Format status Items for display
+        data.statusEffects = this.actor.getStatusItems().map(item => ({
+            id: item.id,
+            label: item.name,
+            icon: item.img || 'icons/svg/hazard.svg',
+            isActive: true
+        }));
         
         return data;
     }
@@ -63,11 +55,15 @@ export class ArmySheet extends ActorSheet {
         // Remove hero buttons
         html.find('.remove-hero').click(this._onRemoveHero.bind(this));
         
-        // Add status effect button
-        html.find('.add-status').click(this._onAddStatusEffect.bind(this));
+        // Add status button
+        html.find('.add-status-btn[data-action="create-status"]').click(this._onAddCustomStatus.bind(this));
         
-        // Remove status effect buttons
-        html.find('.remove-status').click(this._onRemoveStatusEffect.bind(this));
+        // Remove status Item buttons
+        html.find('.remove-status').click(this._onRemoveStatus.bind(this));
+        
+        // Status name and description change handlers
+        html.find('.status-name').change(this._onStatusNameChange.bind(this));
+        html.find('.status-description-input').change(this._onStatusDescriptionChange.bind(this));
         
         // Make editable fields work with TinyMCE for rich text editing
         if (this.isEditable) {
@@ -151,46 +147,105 @@ export class ArmySheet extends ActorSheet {
      * @param {Event} event - The click event
      * @private
      */
-    async _onAddStatusEffect(event) {
+    /**
+     * Handle adding a custom status Item to the army
+     * @param {Event} event - The click event
+     * @private
+     */
+    async _onAddCustomStatus(event) {
         event.preventDefault();
         
         try {
-            // Get the selected status effect ID
-            const statusId = event.currentTarget.dataset.statusId;
+            // 创建自定义状态Item
+            await this.actor.addStatus('新状态');
             
-            if (statusId) {
-                await this.actor.addStatusEffect(statusId);
-                logger.debug(`Added status effect ${statusId} to army ${this.actor.name}`);
-            } else {
-                throw new Error('No status effect ID provided');
+            logger.debug(`Added new status to army ${this.actor.name}`);
+        } catch (err) {
+            logger.error(`Failed to add status to army ${this.actor.name}:`, err);
+            ui.notifications.error(`Failed to add status: ${err.message}`);
+        }
+    }
+    
+    /**
+     * Handle status name change
+     * @param {Event} event - The change event
+     * @private
+     */
+    async _onStatusNameChange(event) {
+        event.preventDefault();
+        
+        try {
+            // Get the status Item ID and new name
+            const statusId = event.currentTarget.dataset.statusId;
+            const newName = event.currentTarget.value.trim();
+            
+            if (statusId && newName) {
+                // Find the status Item
+                const statusItem = this.actor.items.get(statusId);
+                
+                if (statusItem) {
+                    // Update the status name
+                    await statusItem.update({ name: newName });
+                    logger.debug(`Updated status name from ${statusItem.name} to ${newName} for army ${this.actor.name}`);
+                }
             }
         } catch (err) {
-            logger.error(`Failed to add status effect to army ${this.actor.name}:`, err);
-            ui.notifications.error(`Failed to add status effect: ${err.message}`);
+            logger.error(`Failed to update status name for army ${this.actor.name}:`, err);
+            ui.notifications.error(`Failed to update status name: ${err.message}`);
+        }
+    }
+    
+    /**
+     * Handle status description change
+     * @param {Event} event - The change event
+     * @private
+     */
+    async _onStatusDescriptionChange(event) {
+        event.preventDefault();
+        
+        try {
+            // Get the status Item ID and new description
+            const statusId = event.currentTarget.dataset.statusId;
+            const newDescription = event.currentTarget.value.trim();
+            
+            if (statusId) {
+                // Find the status Item
+                const statusItem = this.actor.items.get(statusId);
+                
+                if (statusItem) {
+                    // Update the status description
+                    await statusItem.update({ 'system.description': newDescription });
+                    logger.debug(`Updated status description for army ${this.actor.name}`);
+                }
+            }
+        } catch (err) {
+            logger.error(`Failed to update status description for army ${this.actor.name}:`, err);
+            ui.notifications.error(`Failed to update status description: ${err.message}`);
         }
     }
 
     /**
-     * Handle removing a status effect from the army
+     * Handle removing a status Item from the army
      * @param {Event} event - The click event
      * @private
      */
-    async _onRemoveStatusEffect(event) {
+    async _onRemoveStatus(event) {
         event.preventDefault();
         
         try {
-            // Get the status effect ID
+            // Get the status Item ID
             const statusId = event.currentTarget.dataset.statusId;
             
             if (statusId) {
-                await this.actor.removeStatusEffect(statusId);
-                logger.debug(`Removed status effect ${statusId} from army ${this.actor.name}`);
+                // Remove the status Item
+                await this.actor.removeStatus(statusId);
+                logger.debug(`Removed status ${statusId} from army ${this.actor.name}`);
             } else {
-                throw new Error('No status effect ID provided');
+                throw new Error('No status ID provided');
             }
         } catch (err) {
-            logger.error(`Failed to remove status effect from army ${this.actor.name}:`, err);
-            ui.notifications.error(`Failed to remove status effect: ${err.message}`);
+            logger.error(`Failed to remove status from army ${this.actor.name}:`, err);
+            ui.notifications.error(`Failed to remove status: ${err.message}`);
         }
     }
 
@@ -248,8 +303,7 @@ export class ArmySheet extends ActorSheet {
                 TextEditor.create(element, {
                     value: content,
                     onChange: (html) => this._onEditorSubmit(fieldName, html),
-                    editable: this.isEditable,
-                    document: this.document // 添加document参数
+                    editable: this.isEditable
                 });
             }
         });
