@@ -69,6 +69,14 @@ export class ArmySheet extends ActorSheet {
         html.find('.status-name').change(this._onStatusNameChange.bind(this));
         html.find('.status-description-input').change(this._onStatusDescriptionChange.bind(this));
         
+        // Dice roll button
+        html.find('.dice-roll-btn[data-action="roll-dice"]').click(this._onRollDice.bind(this));
+        
+        // Add legion button
+        html.find('.add-legion').click(this._onAddLegion.bind(this));
+        
+        // Remove legion buttons
+        html.find('.remove-legion').click(this._onRemoveLegion.bind(this));
 
     }
 
@@ -277,13 +285,142 @@ export class ArmySheet extends ActorSheet {
                 }
             }
             
-            // Update the actor with the form data and hero updates
-            await this.actor.update({...formData, ...heroUpdates});
+            // Process legendary legion data
+            const legionUpdates = {};
+            const legions = this.actor.system.legendaryLegions || [];
+            
+            for (let i = 0; i < legions.length; i++) {
+                if (formData[`legion-name-${i}`] !== undefined) {
+                    legionUpdates[`system.legendaryLegions.${i}.name`] = formData[`legion-name-${i}`];
+                    delete formData[`legion-name-${i}`];
+                }
+                if (formData[`legion-banner-${i}`] !== undefined) {
+                    legionUpdates[`system.legendaryLegions.${i}.banner`] = formData[`legion-banner-${i}`];
+                    delete formData[`legion-banner-${i}`];
+                }
+                if (formData[`legion-rules-${i}`] !== undefined) {
+                    legionUpdates[`system.legendaryLegions.${i}.rules`] = formData[`legion-rules-${i}`];
+                    delete formData[`legion-rules-${i}`];
+                }
+            }
+            
+            // Update the actor with the form data, hero updates, and legion updates
+            await this.actor.update({...formData, ...heroUpdates, ...legionUpdates});
             
             logger.debug(`Updated army sheet for ${this.actor.name}`);
         } catch (err) {
             logger.error(`Failed to update army sheet for ${this.actor.name}:`, err);
             ui.notifications.error(`Failed to save changes: ${err.message}`);
+        }
+    }
+
+    /**
+     * Handle dice roll for the army
+     * @param {Event} event - The click event
+     * @private
+     */
+    async _onRollDice(event) {
+        event.preventDefault();
+        
+        try {
+            // Create a 1d3 roll
+            const roll = new Roll("1d3");
+            
+            // Roll the dice
+            await roll.roll();
+            
+            // Create roll message data
+            const rollData = {
+                formula: roll.formula,
+                total: roll.total,
+                dice: roll.dice,
+                actor: this.actor,
+                item: null,
+                flavor: `军队 ${this.actor.name} 的移动距离`
+            };
+            
+            // Send the roll to chat
+            await roll.toMessage({
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor: rollData.flavor
+            });
+            
+            logger.debug(`Rolled movement distance 1d3 for army ${this.actor.name}: ${roll.total}`);
+            
+        } catch (err) {
+            logger.error(`Failed to roll movement distance for army ${this.actor.name}:`, err);
+            ui.notifications.error(`移动距离掷骰失败: ${err.message}`);
+        }
+    }
+
+    /**
+     * Handle adding a new legendary legion to the army
+     * @param {Event} event - The click event
+     * @private
+     */
+    async _onAddLegion(event) {
+        event.preventDefault();
+        
+        try {
+            // Get current legendary legions
+            const legions = this.actor.system.legendaryLegions || [];
+            
+            // Add new legion
+            legions.push({
+                name: '新传奇军团',
+                banner: '',
+                rules: ''
+            });
+            
+            // Update the actor
+            await this.actor.update({
+                'system.legendaryLegions': legions
+            });
+            
+            logger.debug(`Added new legendary legion to army ${this.actor.name}`);
+        } catch (err) {
+            logger.error(`Failed to add legendary legion to army ${this.actor.name}:`, err);
+            ui.notifications.error(`Failed to add legendary legion: ${err.message}`);
+        }
+    }
+
+    /**
+     * Handle removing a legendary legion from the army
+     * @param {Event} event - The click event
+     * @private
+     */
+    async _onRemoveLegion(event) {
+        event.preventDefault();
+        
+        try {
+            // Get the index of the legion to remove
+            const index = parseInt(event.currentTarget.dataset.index);
+            
+            // Get current legendary legions
+            const legions = this.actor.system.legendaryLegions || [];
+            
+            // Check if index is valid
+            if (isNaN(index)) {
+                throw new Error('Invalid legion index');
+            }
+            
+            // Remove the legion
+            if (index >= 0 && index < legions.length) {
+                const legionName = legions[index].name;
+                legions.splice(index, 1);
+                
+                // Update the actor
+                await this.actor.update({
+                    'system.legendaryLegions': legions
+                });
+                
+                logger.debug(`Removed legendary legion ${legionName} from army ${this.actor.name}`);
+            } else {
+                throw new Error('Legion index out of range');
+            }
+        } catch (err) {
+            logger.error(`Failed to remove legendary legion from army ${this.actor.name}:`, err);
+            ui.notifications.error(`Failed to remove legendary legion: ${err.message}`);
         }
     }
 

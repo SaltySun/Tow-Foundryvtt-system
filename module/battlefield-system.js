@@ -6,7 +6,8 @@
 import BattlefieldActor from './documents/BattlefieldActor.js';
 import { ArmySheet } from './sheets/ArmySheet.js';
 import { StructureSheet } from './sheets/StructureSheet.js';
-import { ArmyDataModel, StructureDataModel, StatusDataModel } from './documents/dataModels.js';
+import { FactionSheet } from './sheets/FactionSheet.js';
+import { ArmyDataModel, StructureDataModel, FactionDataModel, StatusDataModel } from './documents/dataModels.js';
 import logger from './utils/Logger.js';
 
 /* -------------------------------------------- */
@@ -18,6 +19,7 @@ Hooks.once('init', async function() {
         CONFIG.Actor.documentClass = BattlefieldActor;
         CONFIG.Actor.dataModels.army = ArmyDataModel;
         CONFIG.Actor.dataModels.structure = StructureDataModel;
+        CONFIG.Actor.dataModels.faction = FactionDataModel;
         
         // Define custom Item data models
         CONFIG.Item.dataModels.status = StatusDataModel;
@@ -52,6 +54,11 @@ Hooks.once('init', async function() {
             types: ['structure'],
             label: 'battlefield-system.Sheet.Structure.Name'
         });
+        Actors.registerSheet(game.system.id, FactionSheet, {
+            makeDefault: true,
+            types: ['faction'],
+            label: 'battlefield-system.Sheet.Faction.Name'
+        });
 
         // Helper functions for handlebars
         Handlebars.registerHelper('eq', (a, b) => a == b);
@@ -60,7 +67,8 @@ Hooks.once('init', async function() {
         // Load templates
         await loadTemplates([
             'systems/battlefield-system/templates/actor/army-sheet.hbs',
-            'systems/battlefield-system/templates/actor/structure-sheet.hbs'
+            'systems/battlefield-system/templates/actor/structure-sheet.hbs',
+            'systems/battlefield-system/templates/actor/faction-sheet.hbs'
         ]);
 
         logger.log('Initialized successfully!');

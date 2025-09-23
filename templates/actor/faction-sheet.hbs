@@ -1,0 +1,108 @@
+{{!-- Faction Sheet Template --}}
+<form class="faction-sheet-form">
+  <header class="sheet-header">
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="势力名称" />
+      </h1>
+      <div class="faction-info">
+        <div class="faction-type">
+          <label>势力类型:</label>
+          <select name="system.factionType">
+            <option value="拥土" {{#if (eq system.factionType "拥土")}}selected{{/if}}>拥土</option>
+            <option value="游荡" {{#if (eq system.factionType "游荡")}}selected{{/if}}>游荡</option>
+            <option value="佣兵" {{#if (eq system.factionType "佣兵")}}selected{{/if}}>佣兵</option>
+          </select>
+        </div>
+        <div class="faction-icon">
+          <label>图标:</label>
+          <input name="system.icon" type="text" value="{{system.icon}}" placeholder="图标路径" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="sheet-body">
+    {{!-- 基本信息内联布局 --}}
+    <div class="inline-form-group">
+      <div class="inline-field">
+        <label><i class="fas fa-gem"></i> 遗物数量:</label>
+        <input name="system.relics" type="number" value="{{system.relics}}" min="0" placeholder="0" class="inline-input" />
+      </div>
+      <div class="inline-field">
+        <label><i class="fas fa-map"></i> 领土尺寸:</label>
+        <input name="system.territorySize" type="number" value="{{system.territorySize}}" min="0" placeholder="0" class="inline-input" />
+      </div>
+    </div>
+
+    {{!-- 仇敌列表 --}}
+    <div class="enemies-section compact-section">
+      <h3><i class="fas fa-skull-crossbones"></i> 仇敌</h3>
+      <div class="enemies-list compact-list">
+        {{#each system.enemies as |enemy index|}}
+        <div class="enemy-card compact-card">
+          <div class="enemy-header compact-header">
+            <h4>仇敌 #{{add index 1}}</h4>
+            <button type="button" class="remove-enemy" data-index="{{index}}" title="删除仇敌">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <div class="enemy-content compact-content">
+            <div class="form-group compact-form-group">
+              <label>名称:</label>
+              <input name="enemy-name-{{index}}" type="text" value="{{enemy.name}}" placeholder="仇敌名称" />
+            </div>
+            <div class="form-group compact-form-group">
+              <label>事迹:</label>
+              <textarea name="enemy-deeds-{{index}}" rows="1" placeholder="与仇敌的冲突和事迹...">{{enemy.deeds}}</textarea>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        {{#unless system.enemies.length}}
+        <div class="no-enemies compact-empty">
+          <p><i class="fas fa-info-circle"></i> 暂无仇敌。点击下方按钮添加第一个仇敌。</p>
+        </div>
+        {{/unless}}
+      </div>
+      <button type="button" class="add-enemy compact-button">
+        <i class="fas fa-plus"></i> 添加仇敌
+      </button>
+    </div>
+
+    {{!-- 盟友列表 --}}
+    <div class="allies-section compact-section">
+      <h3><i class="fas fa-handshake"></i> 盟友</h3>
+      <div class="allies-list compact-list">
+        {{#each system.allies as |ally index|}}
+        <div class="ally-card compact-card">
+          <div class="ally-header compact-header">
+            <h4>盟友 #{{add index 1}}</h4>
+            <button type="button" class="remove-ally" data-index="{{index}}" title="删除盟友">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <div class="ally-content compact-content">
+            <div class="form-group compact-form-group">
+              <label>名称:</label>
+              <input name="ally-name-{{index}}" type="text" value="{{ally.name}}" placeholder="盟友名称" />
+            </div>
+            <div class="form-group compact-form-group">
+              <label>事迹:</label>
+              <textarea name="ally-deeds-{{index}}" rows="1" placeholder="与盟友的合作和事迹...">{{ally.deeds}}</textarea>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        {{#unless system.allies.length}}
+        <div class="no-allies compact-empty">
+          <p><i class="fas fa-info-circle"></i> 暂无盟友。点击下方按钮添加第一个盟友。</p>
+        </div>
+        {{/unless}}
+      </div>
+      <button type="button" class="add-ally compact-button">
+        <i class="fas fa-plus"></i> 添加盟友
+      </button>
+    </div>
+  </section>
+</form>

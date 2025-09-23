@@ -30,6 +30,12 @@
         "SpecialEffects": "特殊效果",
         "ResourceProduction": "资源产出",
         "StatusEffects": "状态效果"
+      },
+      "Faction": {
+        "Name": "势力名称",
+        "FactionType": "势力类型",
+        "Icon": "图标",
+        "Description": "描述"
       }
     },
     "StatusEffects": {
@@ -61,7 +67,8 @@
       "AddHero": "添加英雄",
       "RemoveHero": "移除",
       "AddStatusEffect": "添加",
-      "RemoveStatusEffect": "移除"
+      "RemoveStatusEffect": "移除",
+      "Add": "添加"
     },
     "Tabs": {
       "Main": "主要",

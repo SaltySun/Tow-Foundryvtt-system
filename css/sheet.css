@@ -38,6 +38,12 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.battlefield-system .charlevel label {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .battlefield-system .charlevel input {
@@ -46,6 +52,10 @@
   border: 1px solid #555;
   border-radius: 4px;
   padding: 4px 8px;
+  min-width: 120px;
+  flex: 1;
+  max-width: 200px;
+  text-align: center;
 }
 
 /* Tabs */
@@ -83,7 +93,7 @@
 /* Sheet Body */
 .battlefield-system .sheet-body {
   padding: 10px;
-  background: #f0f0f0;
+  background: transparent;
   min-height: 400px;
 }
 
@@ -95,17 +105,283 @@
   display: block;
 }
 
-/* Form Groups - Cleared as requested */
+/* Form Groups */
+.battlefield-system .form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.battlefield-system .form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+  font-size: 13px;
+  line-height: 1.4;
+  min-height: 18px;
+}
+
+/* 英雄详情中的标签对齐 */
+.battlefield-system .hero-details .form-group label {
+  height: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.battlefield-system .form-group input,
+.battlefield-system .form-group textarea,
+.battlefield-system .form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background: transparent !important;
+  color: #333;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  line-height: 1.4;
+}
+
+.battlefield-system .form-group input:focus,
+.battlefield-system .form-group textarea:focus,
+.battlefield-system .form-group select:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  background: transparent !important;
+}
+
+.battlefield-system .form-group textarea {
+  resize: vertical;
+  min-height: 70px;
+  font-family: inherit;
+}
+
+/* 不同行数的文本域 */
+.battlefield-system .form-group textarea[rows="2"] {
+  min-height: 50px;
+}
+
+.battlefield-system .form-group textarea[rows="3"] {
+  min-height: 70px;
+}
+
+.battlefield-system .form-group textarea[rows="4"] {
+  min-height: 90px;
+}
+
+/* 掷骰按钮样式 */
+.battlefield-system .dice-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.battlefield-system .dice-roll-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.battlefield-system .dice-roll-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+}
+
+.battlefield-system .dice-roll-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.battlefield-system .dice-roll-btn i {
+  font-size: 18px;
+}
+
+/* Legendary Legions Styles */
+.battlefield-system .legions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 0;
+  background: transparent;
+}
+
+.battlefield-system .legion-card {
+  padding: 15px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 0;
+  transition: all 0.2s ease;
+}
+
+.battlefield-system .legion-card:hover {
+  border-color: #adb5bd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.battlefield-system .legion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.battlefield-system .legion-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.battlefield-system .legion-header h3 i {
+  margin-right: 8px;
+  color: #6c757d;
+}
+
+.battlefield-system .legion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: transparent;
+}
+
+.battlefield-system .legion-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+  background: transparent;
+}
+
+/* 传奇军团详情中的表单组对齐 */
+.battlefield-system .legion-details .form-group {
+  margin-bottom: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.battlefield-system .legion-details .form-group textarea {
+  flex: 1;
+  min-height: 70px;
+  height: 70px;
+}
+
+.battlefield-system .no-legions {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+  background: transparent;
+  border: 2px dashed #dee2e6;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.battlefield-system .no-legions p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.battlefield-system .no-legions i {
+  margin-right: 8px;
+  color: #adb5bd;
+}
+
+.battlefield-system .remove-legion {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 11px;
+  min-width: auto;
+  width: auto;
+}
+
+.battlefield-system .remove-legion:hover {
+  background: #c82333;
+}
+
+.battlefield-system .add-legion {
+  width: 100%;
+  padding: 10px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.battlefield-system .add-legion:hover {
+  background: #218838;
+}
+
+/* 响应式传奇军团详情布局 */
+@media (max-width: 500px) {
+  .battlefield-system .legion-details {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .battlefield-system .legion-details .form-group {
+    margin-bottom: 18px;
+  }
+}
 
 /* Grid Layout */
 .battlefield-system .grid {
   display: grid;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 20px;
+  margin-bottom: 20px;
+  align-items: start;
 }
 
 .battlefield-system .grid-2col {
   grid-template-columns: 1fr 1fr;
+}
+
+/* 网格中的表单组对齐 */
+.battlefield-system .grid .form-group {
+  margin-bottom: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.battlefield-system .grid .form-group textarea {
+  flex: 1;
+}
+
+/* 响应式网格 - 在小屏幕上避免重叠 */
+@media (max-width: 600px) {
+  .battlefield-system .grid-2col {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .battlefield-system .grid .form-group {
+    margin-bottom: 18px;
+  }
 }
 
 /* Checkbox Group */
@@ -127,29 +403,118 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 0;
+  background: transparent;
 }
 
 .battlefield-system .hero-card {
-  padding: 10px;
-  background: #fff;
+  padding: 15px;
+  background: transparent;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
+  margin-bottom: 0;
+  transition: all 0.2s ease;
+}
+
+.battlefield-system .hero-card:hover {
+  border-color: #adb5bd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .battlefield-system .hero-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
 }
 
 .battlefield-system .hero-header h3 {
   margin: 0;
-  font-size: 14px;
+  font-size: 16px;
   color: #333;
+  font-weight: 600;
+}
+
+.battlefield-system .hero-header h3 i {
+  margin-right: 8px;
+  color: #6c757d;
+}
+
+.battlefield-system .hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: transparent;
+}
+
+.battlefield-system .hero-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+  background: transparent;
+}
+
+/* 英雄详情中的表单组对齐 */
+.battlefield-system .hero-details .form-group {
+  margin-bottom: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.battlefield-system .hero-details .form-group textarea {
+  flex: 1;
+  min-height: 70px;
+  height: 70px;
+}
+
+/* 响应式英雄详情布局 */
+@media (max-width: 500px) {
+  .battlefield-system .hero-details {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .battlefield-system .hero-details .form-group {
+    margin-bottom: 18px;
+  }
+}
+
+.battlefield-system .no-heroes {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+  background: transparent;
+  border: 2px dashed #dee2e6;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.battlefield-system .no-heroes p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.battlefield-system .no-heroes i {
+  margin-right: 8px;
+  color: #adb5bd;
+}
+
+.battlefield-system .no-status {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+  background: transparent;
+  border: 2px dashed #dee2e6;
+  border-radius: 6px;
+  margin: 20px 0;
+}
+
+.battlefield-system .no-status p {
+  margin: 0;
+  font-size: 14px;
 }
 
 .battlefield-system .remove-hero {
@@ -157,9 +522,11 @@
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 4px 8px;
+  padding: 2px 6px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 11px;
+  min-width: auto;
+  width: auto;
 }
 
 .battlefield-system .remove-hero:hover {
@@ -194,7 +561,7 @@
   display: flex;
   gap: 10px;
   padding: 10px;
-  background: #fff;
+  background: transparent;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -204,7 +571,7 @@
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background: #fff;
+  background: transparent;
   color: #333;
 }
 
@@ -228,7 +595,7 @@
   flex-wrap: wrap;
   gap: 10px;
   padding: 10px;
-  background: #fff;
+  background: transparent;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -238,7 +605,7 @@
   align-items: center;
   gap: 5px;
   padding: 5px 10px;
-  background: #e9ecef;
+  background: transparent;
   border: 1px solid #dee2e6;
   border-radius: 20px;
 }
@@ -282,7 +649,7 @@
   align-items: center;
   gap: 5px;
   padding: 10px;
-  background: #fff;
+  background: transparent;
   border: 1px solid #ddd;
   border-radius: 4px;
   cursor: pointer;
@@ -291,7 +658,7 @@
 }
 
 .battlefield-system .add-status:hover {
-  background: #e9ecef;
+  background: transparent;
   border-color: #adb5bd;
 }
 
@@ -310,7 +677,7 @@
   display: flex;
   gap: 10px;
   padding: 10px;
-  background: #f8f9fa;
+  background: transparent;
   border: 1px solid #dee2e6;
   border-radius: 4px;
   margin-top: 10px;
@@ -327,7 +694,7 @@
 
 .battlefield-system #custom-status-input:focus {
   color: #495057;
-  background-color: #fff;
+  background-color: transparent;
   border-color: #80bdff;
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
@@ -382,7 +749,7 @@
 
 .battlefield-system .status-item {
   padding: 15px;
-  background: #fff;
+  background: transparent;
   border: 1px solid #ddd;
   border-radius: 4px;
   transition: all 0.2s;
@@ -420,7 +787,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
-  background: #fff;
+  background: transparent;
   color: #333;
 }
 
@@ -460,7 +827,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 13px;
-  background: #fff;
+  background: transparent;
   color: #333;
   resize: vertical;
   box-sizing: border-box;
@@ -474,12 +841,338 @@
 
 .battlefield-system .no-status {
   padding: 20px;
-  background: #f8f9fa;
+  background: transparent;
   border: 2px dashed #dee2e6;
   border-radius: 4px;
   text-align: center;
   color: #6c757d;
   font-style: italic;
+}
+
+/* Faction Sheet Styles */
+.battlefield-system .faction-sheet-form {
+  font-family: 'Arial', sans-serif;
+}
+
+.battlefield-system .faction-info {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.battlefield-system .faction-type,
+.battlefield-system .faction-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.battlefield-system .faction-type label,
+.battlefield-system .faction-icon label {
+  font-weight: 600;
+  color: #f0f0f0;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.battlefield-system .faction-type select {
+  background: #333;
+  color: #f0f0f0;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 4px 8px;
+  min-width: 100px;
+}
+
+.battlefield-system .faction-icon input {
+  background: #333;
+  color: #f0f0f0;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 4px 8px;
+  min-width: 200px;
+}
+
+.battlefield-system .enemies-section,
+.battlefield-system .allies-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.battlefield-system .enemies-section h3,
+.battlefield-system .allies-section h3 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  color: #333;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.battlefield-system .enemies-section h3 i,
+.battlefield-system .allies-section h3 i {
+  color: #6c757d;
+}
+
+.battlefield-system .enemies-list,
+.battlefield-system .allies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 15px;
+  background: transparent;
+}
+
+.battlefield-system .enemy-card,
+.battlefield-system .ally-card {
+  padding: 15px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 0;
+  transition: all 0.2s ease;
+}
+
+.battlefield-system .enemy-header,
+.battlefield-system .ally-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.battlefield-system .enemy-header h4,
+.battlefield-system .ally-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.battlefield-system .remove-enemy,
+.battlefield-system .remove-ally {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  min-width: auto;
+  width: auto;
+}
+
+.battlefield-system .remove-enemy:hover,
+.battlefield-system .remove-ally:hover {
+  background: #c82333;
+}
+
+.battlefield-system .enemy-content,
+.battlefield-system .ally-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: transparent;
+}
+
+.battlefield-system .add-enemy,
+.battlefield-system .add-ally {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.battlefield-system .add-enemy:hover,
+.battlefield-system .add-ally:hover {
+  background: linear-gradient(135deg, #218838, #1ea085);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.battlefield-system .no-enemies,
+.battlefield-system .no-allies {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 20px;
+  background: transparent;
+  border: 1px dashed #ddd;
+  border-radius: 6px;
+}
+
+/* Compact Layout Styles for Faction Sheet */
+.battlefield-system .compact-grid {
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+/* Inline Form Layout for Faction Sheet */
+.battlefield-system .inline-form-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.battlefield-system .inline-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.battlefield-system .inline-field label {
+  font-weight: 600;
+  color: #333;
+  font-size: 13px;
+  white-space: nowrap;
+  min-width: auto;
+}
+
+.battlefield-system .inline-input {
+  width: 60px;
+  padding: 4px 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background: transparent !important;
+  color: #333;
+  font-size: 14px;
+  text-align: center;
+}
+
+.battlefield-system .inline-input:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  background: transparent !important;
+}
+
+.battlefield-system .compact-form-group {
+  margin-bottom: 8px;
+}
+
+.battlefield-system .compact-form-group:last-child {
+  margin-bottom: 0;
+}
+
+.battlefield-system .compact-section {
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+.battlefield-system .compact-section h3 {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+}
+
+.battlefield-system .compact-list {
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.battlefield-system .compact-card {
+  padding: 8px;
+  margin-bottom: 0;
+}
+
+.battlefield-system .compact-header {
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+}
+
+.battlefield-system .compact-header h4 {
+  font-size: 13px;
+  margin: 0;
+}
+
+.battlefield-system .compact-content {
+  gap: 6px;
+}
+
+.battlefield-system .compact-content .form-group {
+  margin-bottom: 4px;
+}
+
+.battlefield-system .compact-content .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.battlefield-system .compact-content textarea {
+  min-height: 30px;
+  height: 30px;
+  resize: vertical;
+}
+
+.battlefield-system .compact-button {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.battlefield-system .compact-empty {
+  padding: 10px;
+  font-size: 12px;
+}
+
+.battlefield-system .compact-empty p {
+  margin: 0;
+  font-size: 12px;
+}
+
+/* Responsive Faction Layout */
+@media (max-width: 600px) {
+  .battlefield-system .faction-info {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  
+  .battlefield-system .faction-type,
+  .battlefield-system .faction-icon {
+    justify-content: space-between;
+  }
+  
+  .battlefield-system .faction-type select,
+  .battlefield-system .faction-icon input {
+    flex: 1;
+    min-width: auto;
+  }
+  
+  .battlefield-system .inline-form-group {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  
+  .battlefield-system .inline-field {
+    justify-content: space-between;
+  }
+  
+  .battlefield-system .inline-input {
+    width: 80px;
+  }
 }
 
 /* Responsive Styles */

@@ -30,6 +30,12 @@
         "SpecialEffects": "Special Effects",
         "ResourceProduction": "Resource Production",
         "StatusEffects": "Status Effects"
+      },
+      "Faction": {
+        "Name": "Faction Name",
+        "FactionType": "Faction Type",
+        "Icon": "Icon",
+        "Description": "Description"
       }
     },
     "StatusEffects": {

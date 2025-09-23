@@ -15,36 +15,42 @@
   <nav class="sheet-tabs tabs" data-group="primary">
     <a class="item" data-tab="main">{{localize 'battlefield-system.Tabs.Main'}}</a>
     <a class="item" data-tab="heroes">{{localize 'battlefield-system.Sheet.Army.Heroes'}}</a>
+    <a class="item" data-tab="legions">传奇军团</a>
     <a class="item" data-tab="status">{{localize 'battlefield-system.Sheet.Army.StatusEffects'}}</a>
   </nav>
 
   <section class="sheet-body">
     {{!-- Main Tab --}}
     <div class="tab" data-tab="main">
-      <div class="form-group">
-        <label>{{localize 'battlefield-system.Sheet.Army.Description'}}:</label>
-        <textarea name="system.description" rows="4">{{system.description}}</textarea>
-      </div>
-      
-      {{!-- <div class="grid grid-2col">
+      {{!-- 基本信息网格 --}}
+      <div class="grid grid-2col">
         <div class="form-group">
-          <label>{{localize 'battlefield-system.Sheet.Army.Size'}}:</label>
-          <input name="system.size" type="number" value="{{system.size}}" min="0" />
+          <label>军队规模:</label>
+          <input name="system.size" type="number" value="{{system.size}}" min="0" placeholder="例如：1000" />
         </div>
         <div class="form-group">
           <label>实力评级:</label>
-          <input name="system.powerRating" type="number" value="{{system.powerRating}}" min="0" max="100" />
+          <input name="system.powerRating" type="number" value="{{system.powerRating}}" min="0" max="100" placeholder="0-100" />
         </div>
-      </div> --}}
-      
-      <div class="form-group">
-        <label>荣誉军团:</label>
-        <textarea name="system.honoredLegions" rows="4">{{system.honoredLegions}}</textarea>
       </div>
       
+      {{!-- 描述信息 --}}
       <div class="form-group">
-        <label>特殊能力:</label>
-        <textarea name="system.specialAbilities" rows="4">{{system.specialAbilities}}</textarea>
+        <label>{{localize 'battlefield-system.Sheet.Army.Description'}}:</label>
+        <textarea name="system.description" rows="3" placeholder="军队的详细描述...">{{system.description}}</textarea>
+      </div>
+      
+      {{!-- 事件效果 --}}
+      <div class="form-group">
+        <label>事件效果:</label>
+        <textarea name="system.specialAbilities" rows="4" placeholder="军队的事件效果...">{{system.specialAbilities}}</textarea>
+      </div>
+      
+      {{!-- 移动距离按钮 --}}
+      <div class="dice-section">
+        <button type="button" class="dice-roll-btn" data-action="roll-dice">
+          <i class="fas fa-dice"></i> 移动距离 (1d3)
+        </button>
       </div>
     </div>
 
@@ -54,25 +60,78 @@
         {{#each system.heroes as |hero index|}}
         <div class="hero-card">
           <div class="hero-header">
-            <h3>英雄 #{{add index 1}}</h3>
-            <button type="button" class="remove-hero" data-index="{{index}}"><i class="fas fa-trash"></i></button>
+            <h3><i class="fas fa-user"></i> 英雄 #{{add index 1}}</h3>
+            <button type="button" class="remove-hero" data-index="{{index}}" title="删除英雄">
+              <i class="fas fa-trash"></i>
+            </button>
           </div>
-          <div class="form-group">
-            <label>姓名:</label>
-            <input name="hero-name-{{index}}" type="text" value="{{hero.name}}" placeholder="英雄姓名" />
-          </div>
-          <div class="form-group">
-            <label>装备:</label>
-            <textarea name="hero-equipment-{{index}}" rows="2" placeholder="装备">{{hero.equipment}}</textarea>
-          </div>
-          <div class="form-group">
-            <label>成长特性:</label>
-            <textarea name="hero-traits-{{index}}" rows="3" placeholder="成长特性">{{hero.traits}}</textarea>
+          <div class="hero-content">
+            <div class="form-group">
+              <label><i class="fas fa-tag"></i> 姓名:</label>
+              <input name="hero-name-{{index}}" type="text" value="{{hero.name}}" placeholder="英雄姓名" />
+            </div>
+            <div class="hero-details">
+              <div class="form-group">
+                <label><i class="fas fa-magic"></i> 魔法物品与坐骑:</label>
+                <textarea name="hero-equipment-{{index}}" rows="3" placeholder="魔法物品与坐骑描述...">{{hero.equipment}}</textarea>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-heart-broken"></i> 伤势:</label>
+                <textarea name="hero-traits-{{index}}" rows="3" placeholder="伤势描述...">{{hero.traits}}</textarea>
+              </div>
+            </div>
           </div>
         </div>
         {{/each}}
+        {{#unless system.heroes.length}}
+        <div class="no-heroes">
+          <p><i class="fas fa-info-circle"></i> 暂无英雄。点击下方按钮添加第一个英雄。</p>
+        </div>
+        {{/unless}}
       </div>
-      <button type="button" class="add-hero"><i class="fas fa-plus"></i> {{localize 'battlefield-system.Buttons.Add'}} {{localize 'battlefield-system.Sheet.Army.Heroes'}}</button>
+      <button type="button" class="add-hero">
+        <i class="fas fa-plus"></i> {{localize 'battlefield-system.Buttons.Add'}} {{localize 'battlefield-system.Sheet.Army.Heroes'}}
+      </button>
+    </div>
+
+    {{!-- Legendary Legions Tab --}}
+    <div class="tab" data-tab="legions">
+      <div class="legions-list">
+        {{#each system.legendaryLegions as |legion index|}}
+        <div class="legion-card">
+          <div class="legion-header">
+            <h3><i class="fas fa-flag"></i> 传奇军团 #{{add index 1}}</h3>
+            <button type="button" class="remove-legion" data-index="{{index}}" title="删除传奇军团">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <div class="legion-content">
+            <div class="form-group">
+              <label><i class="fas fa-tag"></i> 名字:</label>
+              <input name="legion-name-{{index}}" type="text" value="{{legion.name}}" placeholder="传奇军团名称" />
+            </div>
+            <div class="legion-details">
+              <div class="form-group">
+                <label><i class="fas fa-magic"></i> 魔法军旗:</label>
+                <textarea name="legion-banner-{{index}}" rows="3" placeholder="魔法军旗描述...">{{legion.banner}}</textarea>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-scroll"></i> 特殊规则:</label>
+                <textarea name="legion-rules-{{index}}" rows="3" placeholder="特殊规则描述...">{{legion.rules}}</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        {{#unless system.legendaryLegions.length}}
+        <div class="no-legions">
+          <p><i class="fas fa-info-circle"></i> 暂无传奇军团。点击下方按钮添加第一个传奇军团。</p>
+        </div>
+        {{/unless}}
+      </div>
+      <button type="button" class="add-legion">
+        <i class="fas fa-plus"></i> 添加传奇军团
+      </button>
     </div>
 
     {{!-- Status Tab --}}
